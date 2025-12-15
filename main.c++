@@ -11,6 +11,7 @@ int main(){
 
     //Generating pixel coords
     for(int j = 0; j <imageHeight; j++){
+        std::clog << "\rScanlines remaining: " << (imageHeight - j) << ' ' << std::flush; //progress bar for render
         for(int i = 0; i < imageWidth; i++){
             auto r = double(i) /(imageWidth -1);
             auto g = double(j) / (imageHeight - 1);
@@ -22,7 +23,7 @@ int main(){
             std::cout << ir << ' ' << ig << ' ' << ib << '\n';
         }
     }
-
+     std::clog << "\rDone.                 \n"; 
 
 
 }
