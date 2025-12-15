@@ -1,31 +1,21 @@
 
 
-#include "Classes/vec3.h"
-#include "Classes/color.h"
-#include "Classes/ray.h"
-#include <iostream>
-double hitSphere(const point3& center, double radius, const ray& r){
-    vec3 oc = center - r.origin();
-    auto a = dot(r.direction(), r.direction());
-    auto b = -2.0 * dot(r.direction(), oc);
-    auto c = dot(oc,oc) - radius * radius;
-    auto discrim = b*b - 4 * a * c;
+#include "Classes/rtweekend.h"
 
-    if(discrim < 0){
-        return -1.0;
-    }else{
-        return( (- b - std::sqrt(discrim)) / (2.0 * a));
+#include "Classes/hittable.h"
+#include "Classes/hittableList.h"
+#include "Classes/sphere.h"
+
+color rayColor(const ray& r, const hittable& world){
+    hitRecord rec;
+    if(world.hit(r, interval(0, infinity), rec)){
+        return 0.5 * (rec.normal + color(1,1,1));
+
     }
-}
-color rayColor(const ray& r){
-    auto t = hitSphere(point3(0,0,-1), 0.5, r);
-    if(t > 0.0){
-        vec3 n = unitVector(r.at(t) - vec3(0,0,-1));
-        return 0.5 * color(n.x()+1, n.y()+1, n.z()+1);
-    }
-    vec3 unitDirection = unitVector(r.direction());
-    auto a = 0.5 * (unitDirection.y() + 1.0);
-    return (1.0 - a) * color(1.0, 1.0, 1.0) + a * color(0.5, 0.7, 1.0);
+    
+    vec3 unit_direction = unitVector(r.direction());
+    auto a = 0.5*(unit_direction.y() + 1.0);
+    return (1.0-a)*color(1.0, 1.0, 1.0) + a*color(0.5, 0.7, 1.0);
 }
 
 int main(){
@@ -37,6 +27,10 @@ int main(){
     int imageHeight = int(imageWidth / aspectRatio);
     imageHeight = (imageHeight < 1) ?  1 : imageHeight;
 
+    //World
+     hittableList world;
+     world.add(make_shared<sphere>(point3(0,0,-1),0.5));
+     world.add(make_shared<sphere>(point3(0,-100.5,-1),100));
     //Camera
     auto focalLength = 1.0;
     auto viewportHeight  = 2.0;
@@ -66,7 +60,7 @@ int main(){
             auto rayDirection = pixelCenter - cameraCenter;
             ray r(cameraCenter, rayDirection);
 
-            color pixelColor = rayColor(r);
+            color pixelColor = rayColor(r,world);
             writeColor(std::cout, pixelColor);
         }
     }
