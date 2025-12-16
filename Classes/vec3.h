@@ -44,7 +44,11 @@ class vec3 {
     static vec3 random(double min, double max){
         return vec3(randomDouble(min, max), randomDouble(min, max), randomDouble(min,max));
     }
-    
+    bool nearZero() const {
+        auto s = 1e-8;
+        return(std::fabs(e[0]) < s) && (std::fabs(e[1] < s)) && (std::fabs(e[2]) < s);
+
+    }
      double length() const {
         return std::sqrt(lengthSquared());
     } //Returns magnitude
@@ -110,5 +114,7 @@ inline vec3 randomOnHemisphere(const vec3& normal){
     if(dot(onUnitSphere, normal) > 0.0) return onUnitSphere;
     else return -onUnitSphere;
 }
-
+inline vec3 reflect(const vec3& v, const vec3& n){
+    return v - 2 * dot(v,n) * n;
+}
 #endif
