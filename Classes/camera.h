@@ -12,6 +12,9 @@ class camera{
     int maxDepth = 10;
 
     double vfov = 90;
+    point3 lookfrom = point3(0,0,0);
+    point3 lookat = point3(0,0,-1);
+    vec3 vup = vec3(0,1,0);
     void render(const hittable& world){
         initialize();
         std::cout << "P3\n" << imageWidth << ' ' << imageHeight << "\n255\n";
@@ -39,28 +42,33 @@ class camera{
     point3 pixel00Loc;
     vec3 deltaU;
     vec3 deltaV;
+    vec3 u,v,w;
     void initialize(){
         imageHeight = int(imageWidth / aspectRatio);
         imageHeight = (imageHeight < 1) ?  1 : imageHeight;
         pixelSamplesScale = 1.0 / samplesPerPixel;
-        center = point3(0,0,0);
-        auto focalLength = 1.0;
+        center = lookfrom;
+        auto focalLength = (lookfrom - lookat).length();
         auto theta = degreesToRadians(vfov);
         auto h = std::tan(theta/2);
         auto viewportHeight  = 2.0 * h * focalLength;
         auto viewportWidth = viewportHeight * (double(imageWidth) / imageHeight);
         
+        w = unitVector(lookfrom - lookat);
+        u = unitVector(cross(vup, w));
+        v = cross(w,u);
 
+        vec3 viewportU = viewportWidth * u;
+        vec3 viewportV = viewportHeight * -v;
         //Finding our u and v rays
-        auto u = vec3(viewportWidth, 0, 0);
-        auto v = vec3(0, -viewportHeight, 0);
+        
 
         //Calculating the delta u and v vectors
-        deltaU = u / imageWidth;
-        deltaV = v / imageHeight;
+        deltaU = viewportU / imageWidth;
+        deltaV = viewportV / imageHeight;
 
         //Calucating upper left pixel
-        auto viewportUpperLeft = center - vec3(0,0,focalLength) - u/2 - v/2;
+        auto viewportUpperLeft = center - (focalLength * w) - viewportU/2 - viewportV/2;
         pixel00Loc = viewportUpperLeft + 0.5 * (deltaU + deltaV);
     }
     
