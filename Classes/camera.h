@@ -10,6 +10,8 @@ class camera{
     int imageWidth = 100;
     int samplesPerPixel = 10;
     int maxDepth = 10;
+
+    double vfov = 90;
     void render(const hittable& world){
         initialize();
         std::cout << "P3\n" << imageWidth << ' ' << imageHeight << "\n255\n";
@@ -43,7 +45,9 @@ class camera{
         pixelSamplesScale = 1.0 / samplesPerPixel;
         center = point3(0,0,0);
         auto focalLength = 1.0;
-        auto viewportHeight  = 2.0;
+        auto theta = degreesToRadians(vfov);
+        auto h = std::tan(theta/2);
+        auto viewportHeight  = 2.0 * h * focalLength;
         auto viewportWidth = viewportHeight * (double(imageWidth) / imageHeight);
         
 
