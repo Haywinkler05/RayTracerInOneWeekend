@@ -39,14 +39,16 @@ This project also strengthened my C++ skills through advanced OOP practices, ope
 ## Sample Renders
 Progression of features implemented throughout the book:
 
-| Gradient & Ray Setup | Sphere & Normals | Aliasing(Bottom) & Anti-Aliasing(Top) |
+| Gradient & Ray Setup | Sphere & Normals | Aliasing(Top) & Anti-Aliasing(Bottom) |
 |:---:|:---:|:---:|
 | ![](Renders/GradientRenders/firstRender.png) | ![](Renders/SphereAndNormalRenders/7thRenderWithCameraClass.png) | ![](Renders/Aliasing/SphereWithAliasing.png) ![](Renders/Aliasing/SphereWithAntiAliasing.png) |
 
 | **Diffuse Materials** | **Reflection & Refraction** | **Positionable Camera** |
+|:---:|:---:|:---:|
 | ![](Renders/DiffuseRenders/12thRenderwithGammaCorrection.png) | ![](Renders/ReflectionAndRefraction/17thRenderWithGlassBubble.png) | ![](Renders/PostionalCameraRenders/18thRenderWithPositionableCamera.png)  ![](Renders/PostionalCameraRenders/1RenderWithCameraFOVAt20.png) |
 
 | **Defocus Blur** | **Gamut Correction** | **Final Render** |
+|:---:|:---:|:---:|
 | ![](Renders/DefocusBlur/19thRenderWithDefocusBlur.png) | ![](Renders/GamutRenders/GamutOfRendersWithGammaCorrection.png) | ![](Renders/FinalRender/FinalRender.png) |
 
 ---
