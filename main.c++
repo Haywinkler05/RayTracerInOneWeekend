@@ -57,17 +57,17 @@ int main(){
 
    cam.aspectRatio = 16.0 / 9.0;   
    cam.imageWidth = 1200;
-   cam.samplesPerPixel = 100;
+   cam.samplesPerPixel = 500;
    cam.maxDepth = 50;
 
 
    cam.vfov = 20;
-   cam.lookfrom = point3(-2,2,1);
-   cam.lookat = point3(0,0,-1);
+   cam.lookfrom = point3(13,2,3);
+   cam.lookat = point3(0,0,0);
    cam.vup = vec3(0,1,0);
 
-   cam.defocusAngle = 10.0;
-   cam.focusDist = 3.4;
+   cam.defocusAngle = 0.6;
+   cam.focusDist = 10.0;
    cam.render(world);
 
 
