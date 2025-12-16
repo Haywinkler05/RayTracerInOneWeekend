@@ -39,7 +39,7 @@ This project also strengthened my C++ skills through advanced OOP practices, ope
 ## Sample Renders
 Progression of features implemented throughout the book:
 
-| Gradient & Ray Setup | Sphere & Normals | Aliasing & Anti-Aliasing |
+| Gradient & Ray Setup | Sphere & Normals | Aliasing(Bottom) & Anti-Aliasing(Top) |
 |:---:|:---:|:---:|
 | ![](Renders/GradientRenders/firstRender.png) | ![](Renders/SphereAndNormalRenders/7thRenderWithCameraClass.png) | ![](Renders/Aliasing/SphereWithAliasing.png) ![](Renders/Aliasing/SphereWithAntiAliasing.png) |
 
