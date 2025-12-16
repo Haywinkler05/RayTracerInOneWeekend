@@ -15,6 +15,8 @@ class camera{
     point3 lookfrom = point3(0,0,0);
     point3 lookat = point3(0,0,-1);
     vec3 vup = vec3(0,1,0);
+    double defocusAngle = 0;
+    double focusDist = 10;
     void render(const hittable& world){
         initialize();
         std::cout << "P3\n" << imageWidth << ' ' << imageHeight << "\n255\n";
@@ -43,15 +45,16 @@ class camera{
     vec3 deltaU;
     vec3 deltaV;
     vec3 u,v,w;
+    vec3 defocusDiskU;
+    vec3 defocusDiskV;
     void initialize(){
         imageHeight = int(imageWidth / aspectRatio);
         imageHeight = (imageHeight < 1) ?  1 : imageHeight;
         pixelSamplesScale = 1.0 / samplesPerPixel;
         center = lookfrom;
-        auto focalLength = (lookfrom - lookat).length();
         auto theta = degreesToRadians(vfov);
         auto h = std::tan(theta/2);
-        auto viewportHeight  = 2.0 * h * focalLength;
+        auto viewportHeight  = 2.0 * h * focusDist;
         auto viewportWidth = viewportHeight * (double(imageWidth) / imageHeight);
         
         w = unitVector(lookfrom - lookat);
@@ -68,15 +71,19 @@ class camera{
         deltaV = viewportV / imageHeight;
 
         //Calucating upper left pixel
-        auto viewportUpperLeft = center - (focalLength * w) - viewportU/2 - viewportV/2;
+        auto viewportUpperLeft = center - (focusDist * w) - viewportU/2 - viewportV/2;
         pixel00Loc = viewportUpperLeft + 0.5 * (deltaU + deltaV);
+
+        auto defocusRadius = focusDist * std::tan(degreesToRadians(defocusAngle / 2));
+        defocusDiskU = u * defocusRadius;
+        defocusDiskV = v * defocusRadius;
     }
     
     ray getRay(int i, int j) const {
         auto offset = sampleSquare();
         auto pixelSample = pixel00Loc + ((i + offset.x()) * deltaU) + (j + offset.y()) * deltaV;
 
-        auto rayOrigin = center;
+        auto rayOrigin = (defocusAngle <= 0) ? center : defocusDiskSample();
         auto rayDirection = pixelSample - rayOrigin;
 
         return ray(rayOrigin, rayDirection);
@@ -84,6 +91,10 @@ class camera{
 
     vec3 sampleSquare() const{
         return vec3(randomDouble() - 0.5, randomDouble() - 0.5, 0);
+    }
+    point3 defocusDiskSample() const {
+        auto p = randomInUnitDisk();
+        return center + (p[0] * defocusDiskU) + (p[1] * defocusDiskV);
     }
     color rayColor(const ray& r, int depth, const hittable& world) const {
         if(depth <= 0) return color(0,0,0);
