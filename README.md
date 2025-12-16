@@ -45,7 +45,7 @@ Progression of features implemented throughout the book:
 
 | **Diffuse Materials** | **Reflection & Refraction** | **Positionable Camera** |
 |:---:|:---:|:---:|
-| ![](Renders/DiffuseRenders/12thRenderwithGammaCorrection.png) | ![](Renders/ReflectionAndRefraction/17thRenderWithGlassBubble.png) | ![](Renders/PostionalCameraRenders/18thRenderWithPositionableCamera.png)  ![](Renders/PostionalCameraRenders/1RenderWithCameraFOVAt20.png) |
+| ![](Renders/DiffuseRenders/12thRenderwithGammaCorrections.png) | ![](Renders/ReflectionAndRefraction/17thRenderWithGlassBubble.png) | ![](Renders/PostionalCameraRenders/18thRenderWithPositionableCamera.png)  ![](Renders/PostionalCameraRenders/1RenderWithCameraFOVAt20.png) |
 
 | **Defocus Blur** | **Gamut Correction** | **Final Render** |
 |:---:|:---:|:---:|
