@@ -41,13 +41,22 @@ int main(){
          }
       }
    }
+
+   auto material1 = make_shared<dielectric>(1.5); 
+   world.add(make_shared<sphere>(point3(0,1,0), 1.0, material1));
+
+   auto material2 = make_shared<lambertian>(color(0.4,0.2,0.1));
+   world.add(make_shared<sphere>(point3(-4,1,0), 1.0, material2));
+
+   auto material3 = make_shared<metal>(color(0.7, 0.6, 0.5), 0.0);
+   world.add(make_shared<sphere>(point3(4,1,0), 1.0, material3));
     
     
 
    camera cam;
 
    cam.aspectRatio = 16.0 / 9.0;   
-   cam.imageWidth = 400;
+   cam.imageWidth = 1200;
    cam.samplesPerPixel = 100;
    cam.maxDepth = 50;
 
